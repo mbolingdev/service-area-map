@@ -1,5 +1,7 @@
 # Service Area Map
 
+**Live demo: https://service-area-map.vercel.app**
+
 An interactive, configurable map of service areas: geofenced coverage circles with a responsive selector, built on Leaflet and OpenStreetMap.
 
 ## What it does
