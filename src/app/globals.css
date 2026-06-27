@@ -1,0 +1,109 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* Isolated stacking context so the map controls and tooltips never bleed
+   over surrounding page chrome. */
+.service-area-map {
+  background: #e2e8f0;
+  isolation: isolate;
+  position: relative;
+  z-index: 0;
+}
+
+/* Pill labels centered on each service-area circle. */
+.service-area-map .leaflet-tooltip.service-area-label {
+  background: #0f172a;
+  border: none;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.service-area-map .leaflet-tooltip.service-area-label::before {
+  display: none;
+}
+
+/* Rounded, neutral zoom controls. */
+.service-area-map .leaflet-control-zoom {
+  border: none;
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  margin: 14px;
+}
+
+.service-area-map .leaflet-control-zoom a {
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  background: #ffffff;
+  color: #0f172a;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.service-area-map .leaflet-control-zoom a:hover {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.service-area-map .leaflet-bar a:first-child {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Quieter attribution that still meets OSM terms. */
+.service-area-map .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.78);
+  color: #5f6368;
+  font-size: 10px;
+}
+
+.service-area-map .leaflet-control-attribution a {
+  color: #3c4043;
+}
+
+.service-area-map .area-circle,
+.service-area-map .area-circle-active {
+  transition:
+    fill-opacity 180ms ease,
+    stroke-width 180ms ease,
+    stroke 180ms ease;
+}
+
+@keyframes area-circle-pulse {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(15, 23, 42, 0));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 8px rgba(15, 23, 42, 0.45));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 0 rgba(15, 23, 42, 0));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .service-area-map .area-circle-active {
+    animation: area-circle-pulse 1.2s ease-in-out infinite;
+  }
+}
+
+/* Soft inner vignette inside the isolated map stack. */
+.service-area-map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.08);
+  z-index: 450;
+}
